@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STEAM-компетентность учителя</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f8; color: #1f2937; min-height: 100vh; }
+
+  header { background: #1e3a5f; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+  header a.back { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; white-space: nowrap; border: 1px solid rgba(255,255,255,0.3); padding: 5px 12px; border-radius: 8px; transition: background 0.15s; }
+  header a.back:hover { background: rgba(255,255,255,0.15); color: white; }
+  header h1 { font-size: 19px; font-weight: 700; line-height: 1.4; }
+  header p  { font-size: 12px; opacity: 0.65; margin-top: 3px; }
+
+  .layout { display: flex; min-height: calc(100vh - 78px); }
+
+  /* ── Left nav ── */
+  .nav-panel { flex: 0 0 300px; background: #fff; border-right: 1px solid #e5e7eb; padding: 28px 18px; }
+  .nav-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #94a3b8; margin-bottom: 14px; }
+
+  .comp-link {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 12px; cursor: pointer;
+    color: #1f2937; margin-bottom: 8px;
+    border: 2px solid transparent; transition: all 0.15s;
+  }
+  .comp-link:hover { filter: brightness(0.97); transform: translateX(2px); }
+  .comp-link.active { border-color: currentColor; }
+
+  .comp-badge { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 14px; color: white; flex-shrink: 0; }
+  .comp-name  { font-size: 14px; line-height: 1.35; font-weight: 600; }
+  .comp-count { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+  /* ── Info panel ── */
+  .info-panel { flex: 1; padding: 32px 40px; overflow-y: auto; }
+
+  .info-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #94a3b8; text-align: center; gap: 12px; }
+  .info-empty svg { opacity: 0.2; }
+  .info-empty p { font-size: 15px; font-weight: 600; }
+  .info-empty span { font-size: 13px; }
+
+  .comp-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 2px solid #f1f5f9; }
+  .comp-header-badge { width: 58px; height: 58px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: white; flex-shrink: 0; }
+  .comp-header-title { font-size: 21px; font-weight: 700; line-height: 1.3; }
+  .comp-header-sub { font-size: 13px; color: #64748b; margin-top: 3px; }
+
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items th { text-align: left; font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 0 12px 10px; border-bottom: 2px solid #e5e7eb; }
+  table.items td { padding: 11px 12px; font-size: 14px; line-height: 1.6; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  table.items td:first-child { width: 66px; font-weight: 700; white-space: nowrap; }
+  table.items tr:last-child td { border-bottom: none; }
+  table.items tr:hover td { background: #fafafa; }
+
+  @media (max-width: 700px) {
+    .layout { flex-direction: column; }
+    .nav-panel { flex: none; border-right: none; border-bottom: 1px solid #e5e7eb; }
+    .info-panel { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="index.html">← На главную</a>
+  <div>
+    <h1>Структура STEAM-компетентности будущего учителя</h1>
+    <p>Нажмите на компонент, чтобы увидеть расшифровку</p>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="nav-panel">
+    <div class="nav-title">Компоненты компетентности</div>
+
+    <div class="comp-link" id="leg-K" onclick="showComp('K')" style="background:#eef2ff;">
+      <div class="comp-badge" style="background:#4f46e5">К</div>
+      <div>
+        <div class="comp-name" style="color:#3730a3">Когнитивный компонент</div>
+        <div class="comp-count">5 показателей</div>
+      </div>
+    </div>
+
+    <div class="comp-link" id="leg-U" onclick="showComp('U')" style="background:#f0fdf4;">
+      <div class="comp-badge" style="background:#16a34a">У</div>
+      <div>
+        <div class="comp-name" style="color:#166534">Умения</div>
+        <div class="comp-count">Деятельностный компонент · 15 показателей</div>
+      </div>
+    </div>
+
+    <div class="comp-link" id="leg-SD" onclick="showComp('SD')" style="background:#fff7ed;">
+      <div class="comp-badge" style="background:#ea580c">СД</div>
+      <div>
+        <div class="comp-name" style="color:#9a3412">Способ деятельности</div>
+        <div class="comp-count">Деятельностный компонент · 9 показателей</div>
+      </div>
+    </div>
+
+    <div class="comp-link" id="leg-M" onclick="showComp('M')" style="background:#fdf4ff;">
+      <div class="comp-badge" style="background:#9333ea">М</div>
+      <div>
+        <div class="comp-name" style="color:#6b21a8">Мотивационно-личностный</div>
+        <div class="comp-count">10 показателей</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-panel" id="infoPanel">
+    <div class="info-empty" id="emptyState">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5">
+        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+      <p>Выберите компонент</p>
+      <span>Нажмите на название слева</span>
+    </div>
+    <div id="contentState" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+const COLORS = {
+  K:  { bg: '#4f46e5', light: '#eef2ff', text: '#3730a3', code: '#4f46e5' },
+  U:  { bg: '#16a34a', light: '#f0fdf4', text: '#166534', code: '#16a34a' },
+  SD: { bg: '#ea580c', light: '#fff7ed', text: '#9a3412', code: '#ea580c' },
+  M:  { bg: '#9333ea', light: '#fdf4ff', text: '#6b21a8', code: '#9333ea' },
+};
+
+const DATA = {
+  K: {
+    label: 'Когнитивный компонент', letter: 'К',
+    items: [
+      { code: 'К₁', text: 'Сущность и роль STEAM-образования, пути его реализации' },
+      { code: 'К₂', text: 'Осведомлённость о научных законах, идеях (метапонятиях), пронизывающих все STEAM-блоки' },
+      { code: 'К₃', text: 'Методы и приёмы, способствующие реализации межпредметных связей и интеграции STEAM-блоков' },
+      { code: 'К₄', text: 'Основные принципы организации учебно-методической работы по реализации межпредметных связей и интеграции в STEAM-образовании' },
+      { code: 'К₅', text: 'Требования к организации проектной, научно-исследовательской деятельности и проблемного обучения в STEAM-образовании, развитию научно-технического творчества' },
+    ]
+  },
+  U: {
+    label: 'Деятельностный компонент — Умения', letter: 'У',
+    items: [
+      { code: 'У₁',  text: 'Владеть способами применения современных методик и технологий в образовании для реализации STEAM-образования' },
+      { code: 'У₂',  text: 'Устанавливать межпредметные связи и понимать актуальность взаимосвязи STEAM-блоков' },
+      { code: 'У₃',  text: 'Владеть приёмами и способами интеграции контента из разных предметных областей, STEAM-блоков' },
+      { code: 'У₄',  text: 'Обозначать ключевую проблему для организации практико-ориентированного STEAM-обучения' },
+      { code: 'У₅',  text: 'Организовывать проектную и проблемно-ориентированную деятельность учащихся и управлять STEAM-проектами' },
+      { code: 'У₆',  text: 'Владеть методиками реализации исследовательского и проектного методов в STEAM-образовании' },
+      { code: 'У₇',  text: 'Владеть способами отбора содержания и приёмами организации учебно-познавательной деятельности учащихся (экспериментальной, исследовательской и проектной) и научно-технического творчества' },
+      { code: 'У₈',  text: 'Владеть основами организации опытно-экспериментальной и научно-исследовательской деятельности учащихся' },
+      { code: 'У₉',  text: 'Владеть современными цифровыми технологиями на уровне, необходимом для достижения целей STEAM-образования' },
+      { code: 'У₁₀', text: 'Владеть основами дизайна, инженерного проектирования для реализации STEAM-образования' },
+      { code: 'У₁₁', text: 'Владеть формами и методами обучения, в т.ч. выходящими за рамки учебных занятий (проектный метод, полевые исследования, лабораторный эксперимент и др.)' },
+      { code: 'У₁₂', text: 'Владеть способами организации самостоятельной деятельности учащихся (исследовательской, проектной и др.) в ходе реализации STEAM-образования' },
+      { code: 'У₁₃', text: 'Владеть навыками межличностного общения в ходе реализации STEAM-образования (сотрудничество, кооперация, работа в команде)' },
+      { code: 'У₁₄', text: 'Владеть навыками разработки и дизайна авторских образовательных STEAM-продуктов (творческий подход)' },
+      { code: 'У₁₅', text: 'Владеть аппаратом диагностики уровня сформированности STEAM-компетентности учащихся' },
+    ]
+  },
+  SD: {
+    label: 'Деятельностный компонент — Способ деятельности', letter: 'СД',
+    items: [
+      { code: 'СД₁', text: 'Организовывать деятельность учащихся, направленную на поиск и формулирование проблемной ситуации, которая может быть решена силами учащихся в процессе STEAM-образования' },
+      { code: 'СД₂', text: 'Организовывать процесс обучения в логике STEAM по поиску решения выявленной проблемной ситуации' },
+      { code: 'СД₃', text: 'Проектировать учебный контент для реализации STEAM-образования' },
+      { code: 'СД₄', text: 'Осуществлять содержательную деятельность (отбор и композицию учебного материала, планирование и построение педагогического процесса) с целью реализации STEAM-образования' },
+      { code: 'СД₅', text: 'Комбинировать учебный материал для получения нового знания в ходе интеграции разных STEAM-блоков' },
+      { code: 'СД₆', text: 'Организовывать коллективную деятельность учащихся на основе знания процессов групповой динамики и принципов формирования команды в ходе реализации STEAM-образования' },
+      { code: 'СД₇', text: 'Организовывать различные виды внеучебной деятельности для реализации STEAM-образования (игровая, учебно-исследовательская, творческая и др.)' },
+      { code: 'СД₈', text: 'Моделировать и оценивать результаты STEAM-проектов и достижения учащихся с использованием различных методов измерения данных' },
+      { code: 'СД₉', text: 'Сотрудничать с другими учителями и специалистами в решении задач STEAM-образования' },
+    ]
+  },
+  M: {
+    label: 'Мотивационно-личностный компонент', letter: 'М',
+    items: [
+      { code: 'МЛ₁',  text: 'Стремиться к формированию у учащихся целостных представлений о взаимосвязи между естественно-научными, гуманитарными и техническими областями знаний' },
+      { code: 'МЛ₂',  text: 'Быть готовым к поиску и установлению причинно-следственных и межпредметных связей в процессе преподавания естественно-научных учебных предметов' },
+      { code: 'МЛ₃',  text: 'Целенаправленно организовывать научно-исследовательскую деятельность учащихся при обучении их естественно-научным учебным предметам во взаимосвязи с гуманитарными и техническими областями знаний' },
+      { code: 'МЛ₄',  text: 'Испытывать потребность в организации проектного обучения в будущей профессиональной деятельности' },
+      { code: 'МЛ₅',  text: 'Демонстрировать увлечённость научно-техническим творчеством и стремиться вовлечь учащихся в такой вид работы' },
+      { code: 'МЛ₆',  text: 'Стремиться к реализации проблемного обучения в преподавании естественно-научных учебных предметов с целью установления взаимосвязи между естественно-научными, гуманитарными и техническими областями знаний' },
+      { code: 'МЛ₇',  text: 'Демонстрировать интерес к реализации научно-технического творчества учащихся с целью вовлечения их в такой вид работы' },
+      { code: 'МЛ₈',  text: 'Быть заинтересованным в реализации практико-ориентированного обучения в преподавании естественно-научных учебных предметов' },
+      { code: 'МЛ₉',  text: 'Проявлять приверженность идеям возможности познания окружающего мира посредством достижений научно-технического прогресса' },
+      { code: 'МЛ₁₀', text: 'Стремиться к совершенствованию своей профессиональной компетенции в области применения современных образовательных технологий, методов, приёмов обучения' },
+    ]
+  }
+};
+
+let current = null;
+
+function showComp(key) {
+  if (current === key) {
+    current = null;
+    document.querySelectorAll('.comp-link').forEach(el => el.classList.remove('active'));
+    document.getElementById('emptyState').style.display = 'flex';
+    document.getElementById('contentState').style.display = 'none';
+    return;
+  }
+  current = key;
+  document.querySelectorAll('.comp-link').forEach(el => el.classList.remove('active'));
+  document.getElementById('leg-' + key).classList.add('active');
+
+  const d = DATA[key];
+  const c = COLORS[key];
+  const rows = d.items.map(item =>
+    `<tr><td style="color:${c.code}">${item.code}</td><td>${item.text}</td></tr>`
+  ).join('');
+
+  document.getElementById('contentState').innerHTML = `
+    <div class="comp-header">
+      <div class="comp-header-badge" style="background:${c.bg}">${d.letter}</div>
+      <div>
+        <div class="comp-header-title" style="color:${c.text}">${d.label}</div>
+        <div class="comp-header-sub">${d.items.length} показателей</div>
+      </div>
+    </div>
+    <table class="items">
+      <thead><tr><th>Код</th><th>Содержание</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('contentState').style.display = 'block';
+}
+</script>
+</body>
+</html>
